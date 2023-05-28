@@ -2,7 +2,6 @@
   "name": "react-mesto-auth",
   "version": "0.1.0",
   "private": true,
-  "author": "Simon Tarasenko",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -42,9 +41,5 @@
   "devDependencies": {
     "gh-pages": "^5.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Sitarweb/react-mesto-auth.git"
-  },
-  "homepage": "https://github.com/Sitarweb/react-mesto-auth"
+  "homepage": "https://sitarweb.github.io/react-mesto-auth"
 }

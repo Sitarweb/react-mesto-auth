@@ -1,5 +1,5 @@
 # Проект 12: Mesto(React + auth)
-__Опубликован по адресу:__ https://sitarweb.github.io/mesto-react/
+__Опубликован по адресу:__ https://sitarweb.github.io/react-mesto-auth/
 
 __Репозиторий:__ https://github.com/Sitarweb/react-mesto-auth 
 #### Описание
