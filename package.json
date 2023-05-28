@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/olesia1205/react-mesto-auth.git"
+    "url": "git+https://github.com/Sitarweb/react-mesto-auth.git"
   },
-  "homepage": "https://olesia1205.github.io/react-mesto-auth"
+  "homepage": "."
 }
