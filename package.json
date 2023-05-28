@@ -41,5 +41,9 @@
   "devDependencies": {
     "gh-pages": "^5.0.0"
   },
+  "repository":{
+    "type": "git",
+    "url": "git+https://github.com/Sitarweb/react-mesto-auth/tree/main.git"
+  },
   "homepage": "https://sitarweb.github.io/react-mesto-auth"
 }
