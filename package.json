@@ -45,5 +45,5 @@
     "type": "git",
     "url": "git+https://github.com/Sitarweb/react-mesto-auth/tree/main.git"
   },
-  "homepage": "https://sitarweb.github.io/react-mesto-auth/"
+  "homepage": "."
 }
