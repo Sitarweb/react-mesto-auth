@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
@@ -207,7 +207,6 @@ function App() {
               </>
             }
           />
-
           <Route
             path="/sign-up"
             element={
@@ -217,7 +216,6 @@ function App() {
               </>
             }
           />
-
           <Route
             path="/sign-in"
             element={
@@ -225,6 +223,12 @@ function App() {
                 <Header email="" link="/sign-up" text="Регистрация" />
                 <Login onLogin={handleLogin} />
               </>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
             }
           />
         </Routes>
