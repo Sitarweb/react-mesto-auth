@@ -1,28 +1,28 @@
 import React from "react";
 
-function ImagePopup(props) {
+function ImagePopup({selectedCard, onClose}) {
   // Попап увеличения картинки карточки
   return (
     <section
       className={`popup popup_images ${
-        props.selectedCard != null ? "popup_is-opened" : ""
+        selectedCard != null ? "popup_is-opened" : ""
       } `}
     >
       <div className="popup__content-image">
         <figure className="popup__figure">
           <img
-            src={props.selectedCard?.link}
-            alt={props.selectedCard?.name}
+            src={selectedCard?.link}
+            alt={selectedCard?.name}
             className="popup__image"
           />
           <figcaption className="popup__subtitle">
-            {props.selectedCard?.name}
+            {selectedCard?.name}
           </figcaption>
         </figure>
         <button
           className="popup__button-close"
           type="button"
-          onClick={props.onClose}
+          onClick={onClose}
         ></button>
       </div>
     </section>

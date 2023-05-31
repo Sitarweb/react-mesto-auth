@@ -1,23 +1,14 @@
-import React from "react";
+import {useEffect} from "react";
 import PopupWithForm from "./PopupWithForm.js";
+import useForm from "../hooks/useForm.js";
 
 function AddPlacePopup(props) {
-  const [name, setName] = React.useState("");
-  const [link, setLink] = React.useState("");
+  const {values, handleChange, setValues} = useForm({});
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    props.onAddPlace({
-      name: name,
-      link: link,
-    });
+    props.onAddPlace(values);
   }
-
-  React.useEffect(() => {
-    setName("");
-    setLink("");
-  }, [props.isOpen]);
 
   return (
     <PopupWithForm
@@ -29,28 +20,28 @@ function AddPlacePopup(props) {
       onSubmit={handleSubmit}
     >
       <input
-        name="card-form-title"
+        name="name"
         type="text"
         id="mesto-input"
         className="form__input form__input_card_title"
         placeholder={"Название"}
-        value={name}
+        value={values.name}
         autoComplete="off"
         minLength={2}
         maxLength={30}
-        onChange={(e) => setName(e.target.value)}
+        onChange={handleChange}
         required
       />
       <span className="form__input-error mesto-input-error"></span>
       <input
-        name="card-form-link"
+        name="link"
         type="url"
         id="url-input"
         className="form__input form__input_card_link"
         placeholder={"Ссылка на картинку"}
-        value={link}
+        value={values.link}
         autoComplete="off"
-        onChange={(e) => setLink(e.target.value)}
+        onChange={handleChange}
         required
       />
       <span className="form__input-error url-input-error"></span>

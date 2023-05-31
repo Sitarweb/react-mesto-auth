@@ -2,31 +2,31 @@ import React from "react";
 
 // Данная функция является шаблоном для собрания попапов проекта
 
-function PopupWithForm(props) {
+function PopupWithForm({name, title, buttonText, children, isOpen, onClose}) {
   // children - здесь храниться доп. разметка каждого попапа(input, span) , isOpen - функция открытия попапа, onClose - функция закрытия
   return (
     <section
-      className={`popup popup_${props.name} ${
-        props.isOpen ? "popup_is-opened" : ""
+      className={`popup popup_${name} ${
+        isOpen ? "popup_is-opened" : ""
       }`}
     >
       <div className="popup__content">
-        <h2 className="popup__title">{props.title}</h2>
+        <h2 className="popup__title">{title}</h2>
         <form
           className="form"
-          name={`${props.name}-form`}
-          onSubmit={props.onSubmit}
+          name={`${name}-form`}
+          onSubmit={onSubmit}
         >
-          {props.children}
+          {children}
           <button className="form__button-save" type="submit">
-            {props.buttonText || "Сохранить"}
+            {buttonText || "Сохранить"}
           </button>
         </form>
         <button
           className="popup__button-close"
           type="button"
-          onClick={props.onClose}
-        ></button>
+          onClick={onClose}
+        />
       </div>
     </section>
   );

@@ -174,90 +174,87 @@ function App() {
   }
 
   return (
-    <>
-      <CurrentUserContext.Provider value={currentUser}>
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <ProtectedRoute
-                  loggedIn={loggedIn}
-                  component={Header}
-                  email={email}
-                  link="/sign-in"
-                  text="Выйти"
-                  onSignOut={handleSignOut}
-                />
+    <CurrentUserContext.Provider value={currentUser}>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <>
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                component={Header}
+                email={email}
+                link="/sign-in"
+                text="Выйти"
+                onSignOut={handleSignOut}
+              />
 
-                <ProtectedRoute
-                  loggedIn={loggedIn}
-                  component={Main}
-                  cards={cards}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  onCardClick={handleCardClick}
-                  onCardLike={handleCardLike}
-                  onCardDelete={handleCardDelete}
-                />
+              <ProtectedRoute
+                loggedIn={loggedIn}
+                component={Main}
+                cards={cards}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+              />
 
-                <ProtectedRoute loggedIn={loggedIn} component={Footer} />
-              </>
-            }
-          />
-          <Route
-            path="/sign-up"
-            element={
-              <>
-                <Header email="" link="/sign-in" text="Войти" />
-                <Register onRegister={handleRegister} />
-              </>
-            }
-          />
-          <Route
-            path="/sign-in"
-            element={
-              <>
-                <Header email="" link="/sign-up" text="Регистрация" />
-                <Login onLogin={handleLogin} />
-              </>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
-            }
-          />
-        </Routes>
+              <ProtectedRoute loggedIn={loggedIn} component={Footer} />
+            </>
+          }
+        />
+        <Route
+          path="/sign-up"
+          element={
+            <>
+              <Header email="" link="/sign-in" text="Войти" />
+              <Register onRegister={handleRegister} />
+            </>
+          }
+        />
+        <Route
+          path="/sign-in"
+          element={
+            <>
+              <Header email="" link="/sign-up" text="Регистрация" />
+              <Login onLogin={handleLogin} />
+            </>
+          }
+        />
+        <Route
+          path="*"
+          element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />}
+        />
+      </Routes>
 
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onUpdateUser={handleUpdateUser}
-          onClose={closeAllPopups}
-        />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onAddPlace={handleAddPlaceSubmit}
-          onClose={closeAllPopups}
-        />
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onUpdateAvatar={handleUpdateAvatar}
-          onClose={closeAllPopups}
-        />
-        <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
-        <InfoTooltip
-          name="infoTooltip"
-          isOpen={infoTooltipPopup}
-          image={registered ? success : fail}
-          text={infoTooltipText}
-          onClose={closeAllPopups}
-        />
-      </CurrentUserContext.Provider>
-    </>
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onUpdateUser={handleUpdateUser}
+        onClose={closeAllPopups}
+      />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onAddPlace={handleAddPlaceSubmit}
+        onClose={closeAllPopups}
+      />
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onUpdateAvatar={handleUpdateAvatar}
+        onClose={closeAllPopups}
+      />
+      <ImagePopup selectedCard={selectedCard} onClose={closeAllPopups} />
+      <InfoTooltip
+        name="infoTooltip"
+        isOpen={infoTooltipPopup}
+        image={registered ? success : fail}
+        altText={registered ? "Регистрация прошла успешно" : "Не удалось зарегистироваться из-за некорректно заполненного поля"}
+        text={infoTooltipText}
+        onClose={closeAllPopups}
+      />
+    </CurrentUserContext.Provider>
   );
 }
 

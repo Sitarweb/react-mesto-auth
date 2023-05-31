@@ -1,99 +1,113 @@
 class Api {
-    constructor(config) {
-      this._url = config.url;
-      this._headers = config.headers;
+  constructor(config) {
+    this._url = config.url;
+    this._headers = config.headers;
+  }
+
+  // Метод определяет прошёл запрос успешно или нет
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
     }
-    /** Метод определяет прошёл запрос успешно или нет */
-    _checkResponse(res) {
-      if (res.ok) {
-        return res.json();
-      }
-  
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    }
-    /** Метод загружает информацию о пользователе с сервера */
-    _getUserInfo() {
-      return fetch(`${this._url}/users/me`, {
-        headers: this._headers,
-      }).then(this._checkResponse);
-    }
-    /** Метод загружает карточки с сервера */
-    _getInitialCards() {
-      return fetch(`${this._url}/cards`, {
-        headers: this._headers,
-      }).then(this._checkResponse);
-    }
-    /** Метод возвращает промисы GET запросов */
-    getAllNeededData() {
-      return Promise.all([this._getUserInfo(), this._getInitialCards()]);
-    }
-    /** Метод сохраняет на сервере отредактированные данные о пользователе */
-    patchUserInfo(data) {
-      return fetch(`${this._url}/users/me`, {
-        headers: this._headers,
-        method: "PATCH",
-        body: JSON.stringify({
-          name: data.name,
-          about: data.about,
-        }),
-      }).then(this._checkResponse);
-    }
-    /** Метод добавляет на сервер новую карточку */
-    postNewCard(data) {
-      return fetch(`${this._url}/cards`, {
-        headers: this._headers,
-        method: "POST",
-        body: JSON.stringify({
-          name: data.name,
-          link: data.link,
-        }),
-      }).then(this._checkResponse);
-    }
-    /** Метод удаляет с сервера карточку */
-    deleteCard(cardId) {
-      return fetch(`${this._url}/cards/${cardId}`, {
-        headers: this._headers,
-        method: "DELETE",
-      }).then(this._checkResponse);
-    }
-    /** Метод ставит лайк */
-    _putLike(cardId) {
-      return fetch(`${this._url}/cards/${cardId}/likes`, {
-        headers: this._headers,
-        method: "PUT",
-      }).then(this._checkResponse);
-    }
-    /** Метод удаляет лайк */
-    _deleteLike(cardId) {
-      return fetch(`${this._url}/cards/${cardId}/likes`, {
-        headers: this._headers,
-        method: "DELETE",
-      }).then(this._checkResponse);
-    }
-  
-    changeLikeCardStatus(cardId, isLiked) {
-      return isLiked ? this._deleteLike(cardId) : this._putLike(cardId);
-    }
-  
-    /** Метод сохраняет на сервере обновленный аватар профиля */
-    patchUserAvatar(data) {
-      return fetch(`${this._url}/users/me/avatar`, {
-        headers: this._headers,
-        method: "PATCH",
-        body: JSON.stringify({
-          avatar: data.link,
-        }),
-      }).then(this._checkResponse);
-    }
+
+    return Promise.reject(`Что-то пошло не так: ${res.status}`);
+  }
+
+  // Универсальный метод запроса с проверкой ответа
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
+  }
+
+  // Метод загружает информацию о пользователе
+  _getUserInfo() {
+    return this._request(`${this._url}/users/me`, {
+      headers: this._headers,
+    });
+  }
+
+  // Метод загружает карточки
+  _getInitialCards() {
+    return this._request(`${this._url}/cards`, {
+      headers: this._headers,
+    });
+  }
+
+  // Метод возвращает промисы GET запросов
+  getAllNeededData() {
+    return Promise.all([this._getUserInfo(), this._getInitialCards()]);
+  }
+
+  // Метод сохраняет отредактированную информацию о пользователе
+  patchUserInfo(data) {
+    return this._request(`${this._url}/users/me`, {
+      headers: this._headers,
+      method: "PATCH",
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about,
+      }),
+    });
+  }
+
+  // Метод добавляет новую карточку
+  postNewCard(data) {
+    return this._request(`${this._url}/cards`, {
+      headers: this._headers,
+      method: "POST",
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link,
+      }),
+    });
+  }
+
+  // Метод удаляет карточку
+  deleteCard(cardId) {
+    return this._request(`${this._url}/cards/${cardId}`, {
+      headers: this._headers,
+      method: "DELETE",
+    });
+  }
+
+  // Метод лайкает карточку
+  _putLike(cardId) {
+    return this._request(`${this._url}/cards/${cardId}/likes`, {
+      headers: this._headers,
+      method: "PUT",
+    });
+  }
+
+  // Метод удаляет лайк с карточки
+  _deleteLike(cardId) {
+    return this._request(`${this._url}/cards/${cardId}/likes`, {
+      headers: this._headers,
+      method: "DELETE",
+    });
   }
   
-  const api = new Api({
-    url: "https://mesto.nomoreparties.co/v1/cohort-60",
-    headers: {
-      authorization: "4de0a39e-3417-42f5-abc3-6ae009a02a8f",
-      "Content-Type": "application/json",
-    },
-  });
-  
-  export default api;
-  
+  // Метод, в зависимости от значения переменной, вызывает метод, который ставит (удаляет) лайк
+  changeLikeCardStatus(cardId, isLiked) {
+    return isLiked ? this._deleteLike(cardId) : this._putLike(cardId);
+  }
+
+  // Метод обновляет аватар профиля
+  patchUserAvatar(data) {
+    return this._request(`${this._url}/users/me/avatar`, {
+      headers: this._headers,
+      method: "PATCH",
+      body: JSON.stringify({
+        avatar: data.link,
+      }),
+    });
+  }
+}
+
+const api = new Api({
+  url: "https://mesto.nomoreparties.co/v1/cohort-60",
+  headers: {
+    authorization: "4de0a39e-3417-42f5-abc3-6ae009a02a8f",
+    "Content-Type": "application/json",
+  },
+});
+
+export default api;
