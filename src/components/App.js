@@ -249,7 +249,7 @@ function App() {
         name="infoTooltip"
         isOpen={infoTooltipPopup}
         image={registered ? success : fail}
-        altText={registered ? "Регистрация прошла успешно" : "Не удалось зарегистироваться из-за некорректно заполненного поля"}
+        altText={registered ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз."}
         text={infoTooltipText}
         onClose={closeAllPopups}
       />

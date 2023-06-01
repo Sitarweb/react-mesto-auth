@@ -16,7 +16,10 @@ function EditProfilePopup({onUpdateUser, isOpen, onClose}) {
     onUpdateUser(values);
   }
 
-  useEffect(() => {setValues({})}, [currentUser, isOpen]);
+  useEffect(() => {setValues({
+    name: currentUser.name,
+    about: currentUser.about
+  })}, [currentUser, isOpen]);
 
   // Попап редактирования профиля
   return (
