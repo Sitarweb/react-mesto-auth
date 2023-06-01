@@ -57,7 +57,7 @@ function App() {
           setCurrentUser(dataForUserInfo);
           setCards(dataForCards);
         })
-        .catch((err) => console.log(err));
+        .catch(console.error);
     }
   }, [loggedIn]);
 
@@ -73,7 +73,7 @@ function App() {
           state.map((c) => (c._id === card._id ? newCard : c))
         );
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleCardDelete(card) {
@@ -82,7 +82,7 @@ function App() {
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleUpdateUser(data) {
@@ -92,7 +92,7 @@ function App() {
         setCurrentUser(data);
         setEditProfilePopupOpen(false);
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleUpdateAvatar(data) {
@@ -102,7 +102,7 @@ function App() {
         setCurrentUser(data);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleAddPlaceSubmit(newCard) {
@@ -112,7 +112,7 @@ function App() {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch(console.error);
   }
 
   function handleRegister({ password, email }) {
@@ -120,16 +120,15 @@ function App() {
       .signup({ password, email })
       .then(() => {
         setRegistered(true);
-        setInfoTooltipPopup(true);
         setInfoTooltipText("Вы успешно зарегистрировались!");
         navigate("/sign-in");
       })
       .catch((err) => {
         setRegistered(false);
-        setInfoTooltipPopup(true);
         setInfoTooltipText("Что-то пошло не так! Попробуйте ещё раз.");
         console.log(err);
-      });
+      })
+      .finally(() => setInfoTooltipPopup(true));
   }
 
   function handleLogin({ password, email }) {
@@ -169,7 +168,7 @@ function App() {
           setEmail(res.data.email);
           navigate("/");
         })
-        .catch((err) => console.log(err));
+        .catch(console.error);
     }
   }
 

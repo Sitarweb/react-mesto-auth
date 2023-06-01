@@ -1,37 +1,34 @@
-import React from "react";
+import {useEffect} from "react";
 import PopupWithForm from "./PopupWithForm.js";
+import useForm from "../hooks/useForm.js";
 
-function EditAvatarPopup(props) {
-  const avatarRef = React.useRef();
+function EditAvatarPopup({onUpdateAvatar, isOpen, onClose}) {
+  const {values, handleChange, setValues} = useForm({});
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    props.onUpdateAvatar({
-      link: `${avatarRef.current.value}`,
-    });
+    onUpdateAvatar(values);
   }
 
-  React.useEffect(() => {
-    avatarRef.current.value = "";
-  }, [props.isOpen]);
+  useEffect(() => {setValues({})}, [isOpen]);
 
   return (
     <PopupWithForm
       name="avatar"
       title="Обновить аватар"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <input
-        name="avatar-form-link"
+        name="link"
         type="url"
         id="avatar-input"
         className="form__input "
         placeholder={"Ссылка на фото"}
+        value={values.link || ""}
         autoComplete="off"
-        ref={avatarRef}
+        onChange={handleChange}
         required
       />
       <span className="form__input-error avatar-input-error"></span>

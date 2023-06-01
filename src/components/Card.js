@@ -1,34 +1,34 @@
-import React from "react";
+import {useContext} from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import urn from "../images/urn.svg";
 
-function Card(props) {
+function Card({card, onCardClick, onCardLike, onCardDelete}) {
   // Шаблон по которому создается карточка
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   function handleLikeClick() {
-    props.onCardLike(props.card);
+    onCardLike(card);
   }
 
   // Определяем, являемся ли мы владельцем текущей карточки
-  const isOwn = props.card.owner._id === currentUser._id;
+  const isOwn = card.owner._id === currentUser._id;
 
-  const isLiked = props.card.likes.some((i) => i._id === currentUser._id);
+  const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
   function handleClick() {
-    props.onCardClick(props.card);
+    onCardClick(card);
   }
 
   function handleDeleteClick() {
-    props.onCardDelete(props.card);
+    onCardDelete(card);
   }
 
   return (
     <article className="elements__card">
       <img
-        src={props.card.link}
-        alt={props.card.name}
+        src={card.link}
+        alt={card.name}
         className="elements__image"
         onClick={handleClick}
       />
@@ -41,7 +41,7 @@ function Card(props) {
         />
       )}
       <div className="elements__text">
-        <h3 className="elements__title">{props.card.name}</h3>
+        <h3 className="elements__title">{card.name}</h3>
         <div className="elements__like-info">
           <button
             className={`elements__heart-button ${
@@ -50,7 +50,7 @@ function Card(props) {
             type="button"
             onClick={handleLikeClick}
           ></button>
-          <p className="elements__likes-counter">{props.card.likes.length}</p>
+          <p className="elements__likes-counter">{card.likes.length}</p>
         </div>
       </div>
     </article>

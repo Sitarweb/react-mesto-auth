@@ -1,23 +1,15 @@
-import React from "react";
+import {useEffect} from "react";
+import useForm from "../hooks/useForm.js";
 
 function Login({onLogin}) {
-  const [userData, setUserData] = React.useState({
-    password: "",
-    email: "",
-  });
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  }
+  const {values, handleChange, setValues} = useForm({});
 
   function handleSubmit(e) {
     e.preventDefault();
-    onLogin({
-      password: userData.password,
-      email: userData.email,
-    });
+    onLogin(values);
   }
+
+  useEffect(() => {setValues({})}, [onLogin]);
 
   return (
     <div className="sign">
@@ -28,7 +20,7 @@ function Login({onLogin}) {
           type="email"
           name="email"
           placeholder="Email"
-          value={userData.email || ""}
+          value={values.email || ""}
           onChange={handleChange}
           required
           minLength={3}
@@ -39,7 +31,7 @@ function Login({onLogin}) {
           type="password"
           name="password"
           placeholder="Пароль"
-          value={userData.password || ""}
+          value={values.password || ""}
           onChange={handleChange}
           autoComplete="off"
           required

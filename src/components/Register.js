@@ -1,24 +1,16 @@
-import React from "react";
+import {useEffect} from "react";
 import { Link } from "react-router-dom";
+import useForm from "../hooks/useForm.js";
 
 function Register({onRegister}) {
-  const [userData, setUserData] = React.useState({
-    password: "",
-    email: "",
-  });
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  }
+  const {values, handleChange, setValues} = useForm({});
 
   function handleSubmit(e) {
     e.preventDefault();
-    onRegister({
-      password: userData.password,
-      email: userData.email,
-    });
+    onRegister(values);
   }
+
+  useEffect(() => {setValues({})}, [onRegister]);
 
   return (
     <div className="sign">
@@ -29,7 +21,7 @@ function Register({onRegister}) {
           type="email"
           name="email"
           placeholder="Email"
-          value={userData.email || ""}
+          value={values.email || ""}
           onChange={handleChange}
           required
           minLength={3}
@@ -40,7 +32,7 @@ function Register({onRegister}) {
           type="password"
           name="password"
           placeholder="Пароль"
-          value={userData.password || ""}
+          value={values.password || ""}
           onChange={handleChange}
           autoComplete="off"
           required
